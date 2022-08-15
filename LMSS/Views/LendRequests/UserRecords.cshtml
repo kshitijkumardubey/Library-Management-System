@@ -1,0 +1,35 @@
+﻿<div class="card">
+    <br/>
+    <br/>
+  <h1 style="text-align:center;font-size:35px;">My Records</h1>
+  <br/>
+  <div class="containerl">
+    <table class="table">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Lend Id</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Book Name</th>
+
+
+
+                   <th scope="col">FineAmount</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                <tr>
+                    
+                    <td>@item.LendId</td>
+                    <td>@item.User.UserName</td>
+                    <td>@item.Book.BookTitle</td>
+                    <td>@item.FineAmount</td>
+                    <td>@item.LendStatus</td>
+                    
+                    </tr>
+                }
+            </tbody>
+            </table>
+  </div>
+</div>

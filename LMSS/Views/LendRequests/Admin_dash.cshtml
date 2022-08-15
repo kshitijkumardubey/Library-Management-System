@@ -1,0 +1,110 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout="";
+}
+ <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>LMS</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/lib/bootstrap/dist/js/popper.min.js" asp-append-version="true"></script>
+<script src="~/js/site.min.js" asp-append-version="true"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Library Management System
+            <a  id="login" class="btn btn-primary float-right" asp-controller="Accounts" asp-action="LoginDash">Logout</a>
+            </h1>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a class="nav-link "  role="button" asp-controller="Accounts" asp-action="Index" aria-haspopup="true" aria-expanded="false">
+                          User management
+                        </a>
+
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" asp-controller="Authors" asp-action="Index" role="button"  aria-haspopup="true" aria-expanded="false">
+                          Author management
+                        </a> 
+                      </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link" asp-controller="Publishers" asp-action="Index" role="button"  aria-haspopup="true" aria-expanded="false">
+                          Publication 
+                        </a> 
+                      </li>
+
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Lend Request management
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" asp-controller="LendRequests" asp-action="LendBooks" >Lend Books</a>
+                          <a class="dropdown-item" asp-controller="LendRequests" asp-action="LendHistory" >Lend /Return History</a>
+                        </div>
+                      </li>
+
+                    <li class="nav-item ">
+                      <a class="nav-link " asp-controller="Books" asp-action="Index" role="button" aria-haspopup="true" aria-expanded="false">
+                        Book management
+                      </a>
+
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+        </header>
+        <section>
+            <h2>Welcome Admin!</h2>
+            <table class="table">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Sl.No</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">BookName</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model){
+                    <tr>
+                        @if (@item.LendStatus == "Requested")
+                        {
+                            <td>@item.LendId</td>
+                            <td>@item.User.UserName</td>
+                            <td>@item.Book.BookTitle</td>
+
+                            <td>
+                                <form asp-controller="LendRequests" asp-action="Approved" asp-route-LendId=@item.LendId asp-route-BookId=@item.BookId>
+                                    <input type="submit" class="btn btn-success"  value="Approve"/>
+                                </form>
+                                <form asp-controller="LendRequests" asp-action="Rejected" asp-route-LendId=@item.LendId >
+                                    <input type="submit" class="btn btn-danger" value="Reject" />
+                                </form>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            </table>
+        </section>
+
+       
+
+    </body>
